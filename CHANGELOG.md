@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The required version of PHP_CodeSniffer Standards Composer Installer Plugin from ^0.5 to ^0.7.1
 - The package vendor name
 - The ruleset description
+- The directory in which the ruleset resides in order to see that dir name on the available standards list in PhpStorm
 
 ## [1.2.0] - 2020-07-22
 ### Changed

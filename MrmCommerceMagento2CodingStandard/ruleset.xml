@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<ruleset name="Optaros" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="../../squizlabs/php_codesniffer/phpcs.xsd">
-    <description>Optaros Coding Standard</description>
+<ruleset name="MRM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../../squizlabs/php_codesniffer/phpcs.xsd">
+    <description>MRM Commerce Magento 2 Coding Standard</description>
     <rule ref="../../magento/magento-coding-standard/Magento2/ruleset.xml"/>
     <rule ref="../../pheromone/phpcs-security-audit/Security/ruleset.xml"/>
     <rule ref="../../slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml"/>

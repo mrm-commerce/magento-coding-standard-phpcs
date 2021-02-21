@@ -1,12 +1,15 @@
 {
-    "name": "optaros/optaros-magento-coding-standard",
-    "description": "Optaros PHP Code Sniffer Coding Standard designed for Magento 2 applications",
+    "name": "mrm-commerce/magento-coding-standard",
+    "description": "MRM Commerce PHP Code Sniffer Coding Standard designed for Magento 2 applications",
     "require": {
-        "magento/magento-coding-standard": "^5.0",
-        "pheromone/phpcs-security-audit": "^2.0",
-        "slevomat/coding-standard": "^6.3.0",
-        "phpcompatibility/php-compatibility": "^9.3.5",
+        "magento/magento-coding-standard": "^6.0",
+        "pheromone/phpcs-security-audit": "2.0",
+        "slevomat/coding-standard": "6.4.1",
+        "phpcompatibility/php-compatibility": "9.3.5",
         "squizlabs/php_codesniffer": "^3.5.4",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1"
+    },
+    "replace": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5"
     },
     "license": [
@@ -14,5 +17,5 @@
         "AFL-3.0"
     ],
     "type": "phpcodesniffer-standard",
-    "version": "1.2.0"
+    "version": "2.0.0"
 }

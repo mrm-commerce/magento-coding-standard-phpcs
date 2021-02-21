@@ -9,8 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Description, installation instructions and FAQ in the README.md file
 ### Changed
 - The required version of Magento Coding Standard from v5 to v6
-- The required version of Slevomat Coding Standard from ^6.3.0 to ^6.4.1
-- The required version of PHP_CodeSniffer Standards Composer Installer Plugin from ^0.5 to ^0.7.1
+- The required version of Slevomat Coding Standard from ^6.3.0 to 6.4.1
+- The required version of PHP Compatibility Coding Standard from ^9.3.5 to 9.3.5 (locked a specific version)
+- The required version of Security Audit Coding Standard from ^2.0 to 2.0.1 (locked a specific version)
+- The required version of PHP_CodeSniffer Standards Composer Installer Plugin from ^0.5 to ^0.7
 - The package vendor name
 - The ruleset description
 - The directory in which the ruleset resides in order to see that dir name on the available standards list in PhpStorm

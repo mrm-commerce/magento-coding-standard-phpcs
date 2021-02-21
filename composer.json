@@ -1,5 +1,5 @@
 {
-    "name": "mrm-commerce/magento-coding-standard",
+    "name": "mrm-commerce/magento-coding-standard-phpcs",
     "description": "MRM Commerce PHP Code Sniffer Coding Standard designed for Magento 2 applications",
     "require": {
         "magento/magento-coding-standard": "^6.0",

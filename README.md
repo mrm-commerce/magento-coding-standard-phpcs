@@ -4,7 +4,7 @@
 A set of PHP Code Sniffer rules meant to ensure or increase the code quality of Magento 2 projects.
 
 ## Installation instructions
-1. Ensure that other dependencies of your project don't conflict with dependencies - e.g. if your project require `"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1"`, you can remove it (`composer remove dealerdirect/phpcodesniffer-composer-installer` or a direct removal from `composer.json`) as this package will install a newer version
+1. Ensure that other dependencies of your project don't conflict with dependencies - e.g. if your project requires `"dealerdirect/phpcodesniffer-composer-installer": "^0.5"`, you can remove it (`composer remove dealerdirect/phpcodesniffer-composer-installer` or a direct removal from `composer.json`) as this package will install a newer version
 2. Run the following command: `composer require mrm-commerce/magento-coding-standard`
 
 ## FAQ

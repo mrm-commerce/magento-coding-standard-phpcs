@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2021-03-21
+### Changed
+- The pheromone/phpcs-security-audit dependency to bgorski/phpcs-security-audit which is a fork. The original project isn't maintained anymore.
+
 ## [2.0.0] - 2021-02-21
 ### Added
 - Description, installation instructions and FAQ in the README.md file

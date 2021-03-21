@@ -3,7 +3,7 @@
          xsi:noNamespaceSchemaLocation="../../../squizlabs/php_codesniffer/phpcs.xsd">
     <description>MRM Commerce Magento 2 Coding Standard</description>
     <rule ref="../../../magento/magento-coding-standard/Magento2/ruleset.xml"/>
-    <rule ref="../../../pheromone/phpcs-security-audit/Security/ruleset.xml"/>
+    <rule ref="../../../bgorski/phpcs-security-audit/Security/ruleset.xml"/>
     <rule ref="../../../slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml"/>
     <rule ref="../../../phpcompatibility/php-compatibility/PHPCompatibility/ruleset.xml"/>
     <rule ref="../../../squizlabs/php_codesniffer/src/Standards/PSR12/ruleset.xml"/>

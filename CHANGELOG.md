@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0] - 2021-03-21
 ### Changed
-- The pheromone/phpcs-security-audit dependency to bgorski/phpcs-security-audit which is a fork. The original project isn't maintained anymore.
+- The pheromone/phpcs-security-audit dependency to mrm-commerce/phpcs-security-audit which is a fork. The original project isn't maintained anymore.
+### Removed
+- The version number from composer.json - it's recommended not to keep it there
 
 ## [2.0.0] - 2021-02-21
 ### Added

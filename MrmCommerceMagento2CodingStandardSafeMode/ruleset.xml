@@ -4,8 +4,16 @@
     <description>MRM Commerce Magento 2 Coding Standard - Safe Mode</description>
     <rule ref="../MrmCommerceMagento2CodingStandard/ruleset.xml"/>
     <!-- Fixing those issues automatically using phpcbf can break the code in classes overwriting parent's code -->
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing" phpcs-only="true"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint" phpcs-only="true"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint" phpcs-only="true"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint" phpcs-only="true"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
+        <severity phpcbf-only="true">0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+        <severity phpcbf-only="true">0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint">
+        <severity phpcbf-only="true">0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
+        <severity phpcbf-only="true">0</severity>
+    </rule>
 </ruleset>

@@ -59,12 +59,16 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses.UselessParentheses"/>
         <!-- The same as PSR12.Files.ImportStatement.LeadingSlash. -->
         <exclude name="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash.UseStartsWithBackslash"/>
+        <!-- The same as PSR12.Properties.ConstantVisibility.NotFound. -->
+        <exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
         <!-- We can usually live without this one. -->
         <exclude name="SlevomatCodingStandard.Functions.StrictCall.StrictParameterMissing"/>
         <!-- While useful in regular methods, in M2 this would throw a lot of warnings for constructors. -->
         <exclude name="SlevomatCodingStandard.Classes.ParentCallSpacing.IncorrectLinesCountBeforeControlStructure"/>
         <!-- In M2 there's a convention to end class names of exceptions with Exception. -->
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix"/>
+        <!-- Comments after code are allowed - can be helpful in case of multi-line calls. -->
+        <exclude name="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode.DisallowedCommentAfterCode"/>
     </rule>
     <rule ref="PSR2">
         <!-- Conflicts with PSR12 -->
@@ -118,6 +122,43 @@
             <property name="ignoreSpacesBeforeAssignment" value="true"/>
             <property name="ignoreSpacesInAnnotation" value="true"/>
             <property name="ignoreSpacesInComment" value="true"/>
+        </properties>
+    </rule>
+    <!-- Disallowing some useless annotations. -->
+    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+        <properties>
+            <property name="forbiddenAnnotations" type="array">
+                <element value="@class"/>
+                <element value="@package"/>
+            </property>
+        </properties>
+    </rule>
+    <!-- Disallowing some useless annotations. -->
+    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenComments">
+        <properties>
+            <property name="forbiddenCommentPatterns" type="array">
+                <element value="#^Class\s+\S+$#i"/>
+                <element value="#^\S+\sconstructor\.$#i"/>
+            </property>
+        </properties>
+    </rule>
+    <!-- Numbers less than 8 digits-long before or after the decimal point are readable enough -->
+    <rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator">
+        <properties>
+            <property name="minDigitsBeforeDecimalPoint" value="8"/>
+            <property name="minDigitsAfterDecimalPoint" value="8"/>
+        </properties>
+    </rule>
+    <!-- in PHPUnit tests the protected setUp() method is usually placed above actual tests -->
+    <rule ref="SlevomatCodingStandard.Classes.ClassStructure.IncorrectGroupOrder">
+        <exclude-pattern>*/Test/*/*Test\.php$</exclude-pattern>
+    </rule>
+    <!-- Creating via the "new" keyword creates hidden dependencies in the code -->
+    <rule ref="SlevomatCodingStandard.PHP.ForbiddenClasses">
+        <properties>
+            <property name="forbiddenClasses" type="array">
+                <element key="DataObject" value="Magento\Framework\DataObject"/>
+            </property>
         </properties>
     </rule>
 </ruleset>

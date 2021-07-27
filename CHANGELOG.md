@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2021-07-25
+### Fixed
+- Exclusions of some rules in phpcbf in the safe mode
+
+## [2.2.0] - 2021-07-25
+### Added
+- The MrmCommerceMagento2CodingStandardSafeMode ruleset which disallow certain risky sniffs from being
+  automatically fixed by phpcbf
+- Some installation instructions in the README.md file
+- Support and configuration for the following sniffs
+  - SlevomatCodingStandard.Commenting.ForbiddenAnnotations
+  - SlevomatCodingStandard.Commenting.ForbiddenComments
+  - SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator
+  - SlevomatCodingStandard.Classes.ClassStructure.IncorrectGroupOrder
+  - SlevomatCodingStandard.PHP.ForbiddenClasses
+- Exclusion of the following sniffs:
+  - SlevomatCodingStandard.Classes.ClassConstantVisibility (we have a PSR-12 sniff for that)
+  - SlevomatCodingStandard.Commenting.DisallowCommentAfterCode.DisallowedCommentAfterCode
+### Removed
+- The squizlabs/php_codesniffer explicit requirement - for the time being it's sufficient to rely
+  on requirements provided by the coding standard's dependencies
+
 ## [2.1.1] - 2021-04-10
 ### Fixed
 - Inclusion of Security rules
@@ -12,7 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0] - 2021-03-21
 ### Changed
-- The pheromone/phpcs-security-audit dependency to mrm-commerce/phpcs-security-audit which is a fork. The original project isn't maintained anymore.
+- The pheromone/phpcs-security-audit dependency to mrm-commerce/phpcs-security-audit which is a fork. 
+  The original project isn't maintained anymore.
 ### Removed
 - The version number from composer.json - it's recommended not to keep it there
 
@@ -52,11 +75,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   PSR2 rule
 - Configuration for some Slevomat rules to adjust them to how things are
   done in MRM Commerce
-
 ### Changed
 - The required version of Slevomat coding standard has been changed in order
   to keep new rules from being included before they're reviewed
-
 ### Removed
 - Consistence coding standard - turned out to be obsolete
 

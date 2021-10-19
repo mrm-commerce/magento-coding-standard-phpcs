@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.2] - 2021-09-12
+### Added
+- Exclusion of an automatic fix from "Equal" to "Identical" comparison using phpcbf in the safe mode
+- Description and usage instructions in the readme file
+### Changed
+- Descriptions of safe mode exclusions to provide some more clarity about why those exclusions are there
+- Installation steps in the readme file
+
 ## [2.2.1] - 2021-07-25
 ### Fixed
 - Exclusions of some rules in phpcbf in the safe mode

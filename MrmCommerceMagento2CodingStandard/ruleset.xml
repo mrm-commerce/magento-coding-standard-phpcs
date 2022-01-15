@@ -161,4 +161,12 @@
             </property>
         </properties>
     </rule>
+    <!-- Control structures are formatted differently in .phtml template files -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
+        <exclude-pattern>*\.phtml$</exclude-pattern>
+    </rule>
+    <!-- Control structures are formatted differently in .phtml template files -->
+    <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis">
+        <exclude-pattern>*\.phtml$</exclude-pattern>
+    </rule>
 </ruleset>

@@ -2,6 +2,7 @@
 <ruleset name="MRM Commerce Magento 2 Coding Standard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../../../squizlabs/php_codesniffer/phpcs.xsd">
     <description>MRM Commerce Magento 2 Coding Standard</description>
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
     <rule ref="../../../magento/magento-coding-standard/Magento2/ruleset.xml"/>
     <rule ref="../../../slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml"/>
     <rule ref="../../../phpcompatibility/php-compatibility/PHPCompatibility/ruleset.xml"/>
@@ -10,6 +11,11 @@
         <!-- Too many false positives in case of repositories - excluding until it's fixed -->
         <exclude name="Security.BadFunctions.FilesystemFunctions.WarnFilesystem"/>
     </rule>
+    <rule ref="PSR2">
+        <!-- Conflicts with PSR12 -->
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+    </rule>
+
     <rule ref="SlevomatCodingStandard">
         <!-- FQCNs should be allowed -->
         <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly"/>
@@ -70,17 +76,270 @@
         <!-- Comments after code are allowed - can be helpful in case of multi-line calls. -->
         <exclude name="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode.DisallowedCommentAfterCode"/>
     </rule>
-    <rule ref="PSR2">
-        <!-- Conflicts with PSR12 -->
-        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+
+    <!-- Type hints in annotations should always be transformed to native ones, but not automatically because of possible errors when they're inherited -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
+        <severity phpcs-only="true">20</severity> <!-- Type hints are among the most important things for good and bulletproof code -->
+        <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
     </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+        <severity phpcs-only="true">20</severity> <!-- Type hints are among the most important things for good and bulletproof code -->
+        <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+        <severity phpcs-only="true">20</severity> <!-- Type hints are among the most important things for good and bulletproof code -->
+        <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+    </rule>
+
+    <!-- A constant is, well, constant, so no need to specify its type using @var, it's always clear -->
+    <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Ensures that union types in docblocks are formatted correctly, which prevents errors with getting the correct type if it's computed using a docblock. -->
+    <!-- What we allow: int|null, string|null etc. We disallow hints like ?int and null|int, they may cause issues. -->
+    <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+        <severity>20</severity> <!-- Prevents actual errors -->
+        <properties>
+            <property name="nullPosition" value="last"/>
+            <property name="shortNullable" value="no"/>
+            <property name="withSpaces" value="no"/> <!-- To be consistent with core Magento hints. -->
+        </properties>
+    </rule>
+
+    <!-- Catch should not introduce any variable if that variable is not used, e.g. catch (NoSuchEntityException) {...}. Enabled by default on PHP ^8. -->
+    <rule ref="SlevomatCodingStandard.Exceptions.RequireNonCapturingCatch">
+        <severity>5</severity> <!-- Can provide a lot of incompatibilities with existing code without providing a lot of added value -->
+    </rule>
+
+    <!-- Requires strict types. An absolute necessity for writing good code. For consistency, set to require one blank line below and above, and no spaces around "=" -->
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <severity phpcs-only="true">20</severity> <!-- Brings A LOT of added value - prevents errors and increases security. -->
+        <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
         <properties>
             <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
             <property name="newlinesCountAfterDeclare" value="2"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
     </rule>
+
+    <!-- Disallows adding things to array without explicitly declaring them first. Can prevent typos: https://github.com/phpstan/phpstan/issues/826 -->
+    <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation">
+        <severity>20</severity> <!-- Prevents actual errors -->
+    </rule>
+
+    <!-- in PHPUnit tests the protected setUp() method is usually placed above actual tests -->
+    <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
+        <severity>5</severity> <!-- May cause some incompatibilities with existing code without providing a lot of added value -->
+        <exclude-pattern>*/Test/*/*Test\.php$</exclude-pattern> <!-- In PHPUnit tests the protected setUp() method is placed above actual tests -->
+        <properties>
+            <property name="groups" type="array">
+                <element value="uses"/>
+
+                <element value="public constants"/>
+                <element value="protected constants"/>
+                <element value="private constants"/>
+
+                <element value="public properties"/>
+                <element value="protected properties"/>
+                <element value="private properties"/>
+
+                <element value="constructor"/>
+
+                <element value="all public methods"/>
+                <element value="all protected methods"/>
+                <element value="all private methods"/>
+
+                <element value="magic methods"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Disallows usage of public properties - this is bad code architecture, data should be encapsulated with setters and getters on top of it whenever necessary. -->
+    <rule ref="SlevomatCodingStandard.Classes.ForbiddenPublicProperty">
+        <severity>20</severity> <!-- Prevents very bad code architecture -->
+    </rule>
+
+    <!-- Requires constructor property promotion in PHP 8, which is good architecture and makes classes easier to read. -->
+    <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion">
+        <severity>20</severity> <!-- Prevents bad code architecture -->
+    </rule>
+
+    <!-- Prevents from using static:: when this is not necessary. -->
+    <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows assigning to variables inside loop conditions like if($variable = $this->someFunction()). Prevents errors and promotes readable code. -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition">
+        <severity>20</severity>
+    </rule>
+
+    <!-- Disallows the continue keyword in switch statements without an explicit integer operand. See: https://www.php.net/manual/en/control-structures.continue.php -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch">
+        <severity phpcs-only="true">20</severity> <!-- Prevents actual errors. -->
+        <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+    </rule>
+
+    <!-- Requires the null coalesce operator: return $variable ?? 'something else', sniff should be suppressed only if the ?: syntax is absolutely necessary. -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator">
+        <severity phpcs-only="true">10</severity>
+        <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+    </rule>
+
+    <!-- Requires the early exit which greatly increases code readability. -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">
+        <severity>10</severity>
+        <properties>
+            <property name="ignoreStandaloneIfInScope" value="true"/>
+            <property name="ignoreOneLineTrailingIf" value="true"/>
+            <property name="ignoreTrailingIfWithOneInstruction" value="true"/>
+        </properties>
+    </rule>
+
+    <!-- Requires closures not using $this that are not declared static. Closures with a reference to $this might prevent garbage collection of that object. -->
+    <rule ref="SlevomatCodingStandard.Functions.StaticClosure">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows functions longer than 20 lines. -->
+    <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows direct usage of __invoke(). -->
+    <rule ref="SlevomatCodingStandard.PHP.DisallowDirectMagicInvokeCall">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows loose comparison operators in order to promote more bulletproof code. -->
+    <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators">
+        <severity phpcs-only="true">10</severity>
+        <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+    </rule>
+
+    <!-- Disallows non-standalone usage of increment/decrement operators to increase code readability. -->
+    <rule ref="SlevomatCodingStandard.Operators.RequireOnlyStandaloneIncrementAndDecrementOperators">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Requires combined assignment operators like += or .= to increase code readability. -->
+    <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Closures should not be provided with variables they don't use. -->
+    <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Functions should not be provided with parameters they don't use. The warning has to be suppressed in case of plugins. -->
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows specifying useless default values for parameters followed by other parameters without default values. -->
+    <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows adding unused imports (usually left after code refactoring). -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows adding unused imports (usually left after code refactoring). -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Looks for use alias that is same as unqualified name. -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Disallows passing variables by reference -->
+    <rule ref="SlevomatCodingStandard.PHP.DisallowReference">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Creating via the "new" keyword creates hidden dependencies in the code. -->
+    <rule ref="SlevomatCodingStandard.PHP.ForbiddenClasses">
+        <severity>10</severity>
+        <properties>
+            <property name="forbiddenClasses" type="array">
+                <element key="\Magento\Framework\DataObject"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Requires nowdoc syntax instead of heredoc when possible, so usage of variables inside is clear. -->
+    <rule ref="SlevomatCodingStandard.PHP.RequireNowdoc">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Reports useless parentheses to increase code readability. -->
+    <rule ref="SlevomatCodingStandard.PHP.UselessParentheses">
+        <severity>10</severity>
+    </rule>
+
+    <!-- PHP optimizes some internal functions into special opcodes, but argument unpacking (...$args) prevents that. -->
+    <rule ref="SlevomatCodingStandard.PHP.OptimizedFunctionsWithoutUnpacking">
+        <severity>20</severity> <!-- Increases the performance of the code -->
+    </rule>
+
+    <!-- Self-explanatory -->
+    <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Superglobals should not be accessed directly, instead they should be validated and sanitized. -->
+    <rule ref="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable">
+        <severity>20</severity> <!-- Increases the security of the code -->
+    </rule>
+
+    <!-- Duplicate assignment to the same variable is a result of a failed copy-paste-paste. -->
+    <rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Reports unused variables for the sake of increased code readability. -->
+    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
+        <severity>10</severity>
+    </rule>
+
+    <!-- Reports useless variables. -->
+    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
+        <severity phpcs-only="true">5</severity> <!-- Not much added value, and for the reason below -->
+        <severity phpcbf-only="true">0</severity> <!-- It can conflict with PHPStan validation, and automatic removal may raise one more PHPStan error -->
+    </rule>
+
+    <!-- Reports catch statements that are unreachable because of other catch statements above them that have broader context. -->
+    <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch">
+        <severity>20</severity> <!-- Can prevent actual errors -->
+    </rule>
+
+    <!-- List of Slevomat rules we haven't included: -->
+    <!-- SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch - goes against https://wiki.php.net/rfc/non-capturing_catches which can be quite useful in Magento. -->
+    <!-- SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly - there can be valid scenarios for catching \Exception, but not \Throwable. -->
+    <!-- SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion - takes away one of the nicest improvements of PHP 8. -->
+    <!-- SlevomatCodingStandard.Classes.DisallowLateStaticBindingForConstants - this one is opinion-based, pros and cons may depend on specific scenario. -->
+    <!-- SlevomatCodingStandard.ControlStructures.DisallowEmpty - empty() stays allowed -->
+    <!-- SlevomatCodingStandard.Functions.StrictCall - more often than not we don't need to make strict calls -->
+    <!-- SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators - they stay allowed -->
+    <!-- SlevomatCodingStandard.Namespaces.UseFromSameNamespace - full namespace paths are allowed -->
+    <!-- SlevomatCodingStandard.PHP.RequireExplicitAssertion - conflicts with the Magento 2 Coding Standard -->
+
+
+
+
+
+
+
+
+
+
+
     <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
         <properties>
             <property name="searchAnnotations" value="true"/>
@@ -94,22 +353,11 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison">
         <severity>10</severity>
     </rule>
-    <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">
-        <properties>
-            <property name="ignoreStandaloneIfInScope" value="true"/>
-            <property name="ignoreOneLineTrailingIf" value="true"/>
-            <property name="ignoreTrailingIfWithOneInstruction" value="true"/>
-        </properties>
-    </rule>
     <rule ref="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators">
         <severity>0</severity>
     </rule>
     <!-- The current standard we wilfully adhere to without complain is to add comments everywhere. -->
     <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment">
-        <severity>0</severity>
-    </rule>
-    <!-- Conflicts with the Magento 2 Coding Standard. -->
-    <rule ref="SlevomatCodingStandard.PHP.RequireExplicitAssertion">
         <severity>0</severity>
     </rule>
     <!-- This rule doesn't check compatibility with parent and can break your code (e.g. graphql resolvers). -->
@@ -149,16 +397,23 @@
             <property name="minDigitsAfterDecimalPoint" value="8"/>
         </properties>
     </rule>
-    <!-- in PHPUnit tests the protected setUp() method is usually placed above actual tests -->
-    <rule ref="SlevomatCodingStandard.Classes.ClassStructure.IncorrectGroupOrder">
-        <exclude-pattern>*/Test/*/*Test\.php$</exclude-pattern>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Control structures are formatted differently in .phtml template files -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
+        <exclude-pattern>*\.phtml$</exclude-pattern>
     </rule>
-    <!-- Creating via the "new" keyword creates hidden dependencies in the code -->
-    <rule ref="SlevomatCodingStandard.PHP.ForbiddenClasses">
-        <properties>
-            <property name="forbiddenClasses" type="array">
-                <element key="DataObject" value="Magento\Framework\DataObject"/>
-            </property>
-        </properties>
+    <!-- Control structures are formatted differently in .phtml template files -->
+    <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis">
+        <exclude-pattern>*\.phtml$</exclude-pattern>
     </rule>
 </ruleset>

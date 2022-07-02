@@ -2,9 +2,8 @@
 <ruleset name="MRM Commerce Magento 2 Coding Standard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../../../squizlabs/php_codesniffer/phpcs.xsd">
     <description>MRM Commerce Magento 2 Coding Standard</description>
-    <config name="installed_paths" value="../../slevomat/coding-standard"/>
+    <config name="installed_paths" value="../../magento/magento-coding-standard,../../mrm-commerce/magento-coding-standard-phpcs,../../mrm-commerce/phpcs-security-audit,../../phpcompatibility/php-compatibility,../../slevomat/coding-standard"/>
     <rule ref="../../../magento/magento-coding-standard/Magento2/ruleset.xml"/>
-    <rule ref="../../../slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml"/>
     <rule ref="../../../phpcompatibility/php-compatibility/PHPCompatibility/ruleset.xml"/>
     <rule ref="../../../squizlabs/php_codesniffer/src/Standards/PSR12/ruleset.xml"/>
     <rule ref="Security">
@@ -74,21 +73,22 @@
         <properties>
             <property name="groups" type="array">
                 <element value="uses"/>
-
+                <element value="enum cases"/>
                 <element value="public constants"/>
                 <element value="protected constants"/>
                 <element value="private constants"/>
-
+                <element value="public static properties"/>
+                <element value="protected static properties"/>
+                <element value="private static properties"/>
                 <element value="public properties"/>
                 <element value="protected properties"/>
                 <element value="private properties"/>
-
+                <element value="static constructors"/>
                 <element value="constructor"/>
-
+                <element value="destructor"/>
                 <element value="all public methods"/>
                 <element value="all protected methods"/>
                 <element value="all private methods"/>
-
                 <element value="magic methods"/>
             </property>
         </properties>
@@ -270,13 +270,14 @@
     </rule>
 
     <!-- Standarizes the number of spaces before and after colons to zero. -->
-    <rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing">
-        <severity>5</severity>
-        <properties>
-            <property name="spacesCountBeforeColon" value="0"/>
-            <property name="spacesCountBeforeType" value="0"/>
-        </properties>
-    </rule>
+    <!-- Not available in 8.1.0 yet. -->
+    <!--    <rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing">-->
+    <!--        <severity>5</severity>-->
+    <!--        <properties>-->
+    <!--            <property name="spacesCountBeforeColon" value="0"/>-->
+    <!--            <property name="spacesCountBeforeType" value="0"/>-->
+    <!--        </properties>-->
+    <!--    </rule>-->
 
     <!-- One empty line between different class members like properties or methods. -->
     <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing">

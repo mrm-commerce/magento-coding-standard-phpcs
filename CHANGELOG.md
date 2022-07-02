@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2022-07-02
+### Changed
+- The minimum required version of the Magento Coding Standard
+- The required version of the Slevomat Coding Standard
+- The approach to Slevomat rules - instead of including all of them and then excluding selected ones,
+  we only include those we want to use
+- Configuration of some of Slevomat coding rules, e.g. the ability of phpcbf to automatically fix them
+### Removed
+- The safe mode of the coding standard. The regular one is now safe and includes configuration in unsafe
+  rules that prevents phpcbf from fixing them automatically
+
 ## [2.2.2] - 2021-09-12
 ### Added
 - Exclusion of an automatic fix from "Equal" to "Identical" comparison using phpcbf in the safe mode

@@ -2,7 +2,7 @@
     "name": "mrm-commerce/magento-coding-standard-phpcs",
     "description": "MRM Commerce PHP Code Sniffer Coding Standard designed for Magento 2 applications",
     "require": {
-        "magento/magento-coding-standard": "^25.0",
+        "magento/magento-coding-standard": "*",
         "mrm-commerce/phpcs-security-audit": "^3.0",
         "slevomat/coding-standard": "8.1.0",
         "phpcompatibility/php-compatibility": "9.3.5",

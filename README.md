@@ -11,6 +11,10 @@ coding standards like:
   usage
 - Slevomat Coding Standard - advanced and configurable coding standard providing a lot of functional, cleaning
   and formatting sniffs that aim to make the code more consistent, safer and easier to read and maintain
+The ruleset is designed to prevent phpcbf (PHP Code Beautifier and Fixer) from automatic fixes to reported errors and
+warnings that may make your code to stop working. This means that you can use phpcbf to perform bulk fixes of the code
+in your custom modules instead of fixing every single issue manually. Just remember to always check the result before 
+committing or merging it.
 
 ## Installation instructions
 1. Ensure that other dependencies of your project don't conflict with 

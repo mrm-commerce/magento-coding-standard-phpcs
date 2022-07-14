@@ -10,23 +10,48 @@
         <!-- Too many false positives in case of repositories - excluding until it's fixed -->
         <exclude name="Security.BadFunctions.FilesystemFunctions.WarnFilesystem"/>
     </rule>
+
     <rule ref="PSR2">
         <!-- Conflicts with PSR12 -->
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
     </rule>
 
-    <!-- Type hints in annotations should always be transformed to native ones, but not automatically because of possible errors when they're inherited -->
+    <!-- Type hints in annotations should always be transformed to native ones whenever possible, but not automatically because of possible errors when they're inherited -->
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
         <severity phpcs-only="true">20</severity> <!-- Type hints are among the most important things for good and bulletproof code -->
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+        <!-- There are some public methods that actually do require param types in annotations. -->
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation"/>
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessSuppress" phpcbf-only="true"/>
     </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
         <severity phpcs-only="true">20</severity> <!-- Type hints are among the most important things for good and bulletproof code -->
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessSuppress" phpcbf-only="true"/>
     </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
         <severity phpcs-only="true">20</severity> <!-- Type hints are among the most important things for good and bulletproof code -->
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+        <!-- Let's be consistent. -->
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation"/>
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.LessSpecificNativeTypeHint" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessSuppress" phpcbf-only="true"/>
     </rule>
 
     <!-- A constant is, well, constant, so no need to specify its type using @var, it's always clear -->
@@ -59,6 +84,9 @@
             <property name="newlinesCountAfterDeclare" value="2"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectStrictTypesFormat" phpcbf-only="true"/>
     </rule>
 
     <!-- Disallows adding things to array without explicitly declaring them first. Can prevent typos: https://github.com/phpstan/phpstan/issues/826 -->
@@ -70,28 +98,6 @@
     <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
         <severity>5</severity> <!-- May cause some incompatibilities with existing code without providing a lot of added value -->
         <exclude-pattern>*/Test/*/*Test\.php$</exclude-pattern> <!-- In PHPUnit tests the protected setUp() method is placed above actual tests -->
-        <properties>
-            <property name="groups" type="array">
-                <element value="uses"/>
-                <element value="enum cases"/>
-                <element value="public constants"/>
-                <element value="protected constants"/>
-                <element value="private constants"/>
-                <element value="public static properties"/>
-                <element value="protected static properties"/>
-                <element value="private static properties"/>
-                <element value="public properties"/>
-                <element value="protected properties"/>
-                <element value="private properties"/>
-                <element value="static constructors"/>
-                <element value="constructor"/>
-                <element value="destructor"/>
-                <element value="all public methods"/>
-                <element value="all protected methods"/>
-                <element value="all private methods"/>
-                <element value="magic methods"/>
-            </property>
-        </properties>
     </rule>
 
     <!-- Disallows usage of public properties - this is bad code architecture, data should be encapsulated with setters and getters on top of it whenever necessary. -->
@@ -118,18 +124,24 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch">
         <severity phpcs-only="true">20</severity> <!-- Prevents actual errors. -->
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch.DisallowedContinueWithoutIntegerOperandInSwitch" phpcbf-only="true"/>
     </rule>
 
     <!-- Requires the null coalescing operator: return $variable ?? 'something else', sniff should be suppressed only if the ?: syntax is absolutely necessary. -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator">
         <severity phpcs-only="true">10</severity>
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator.NullCoalesceOperatorNotUsed" phpcbf-only="true"/>
     </rule>
 
     <!-- Requires the null coalescing assignment operator: return $variable ??= 'something else', sniff should be suppressed only if the ?: syntax is absolutely necessary. -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator">
         <severity phpcs-only="true">10</severity>
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator.RequiredNullCoalesceEqualOperator" phpcbf-only="true"/>
     </rule>
 
     <!-- Requires the early exit which greatly increases code readability. -->
@@ -147,9 +159,12 @@
         <severity>10</severity>
     </rule>
 
-    <!-- Disallows functions longer than 20 lines. -->
+    <!-- Disallows functions longer than 100 lines. -->
     <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
         <severity>10</severity>
+        <properties>
+            <property name="maxLinesLength" value="100"/>
+        </properties>
     </rule>
 
     <!-- Disallows direct usage of __invoke(). -->
@@ -161,6 +176,9 @@
     <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators">
         <severity phpcs-only="true">10</severity>
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
+        <!-- May cause existing code to fail, so not fixable automatically -->
+        <exclude name="SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator" phpcbf-only="true"/>
     </rule>
 
     <!-- Disallows non-standalone usage of increment/decrement operators to increase code readability. -->
@@ -252,6 +270,7 @@
     <rule ref="SlevomatCodingStandard.Variables.UselessVariable">
         <severity phpcs-only="true">5</severity> <!-- Not much added value, and for the reason below -->
         <severity phpcbf-only="true">0</severity> <!-- It can conflict with PHPStan validation, and automatic removal may raise one more PHPStan error -->
+        <exclude name="SlevomatCodingStandard.Variables.UselessVariable.UselessVariable" phpcbf-only="true"/>
     </rule>
 
     <!-- Reports unreachable catch statements in try-catch blocks with multipla catches. -->
@@ -277,8 +296,8 @@
     <!--            <property name="spacesCountBeforeColon" value="0"/>-->
     <!--            <property name="spacesCountBeforeType" value="0"/>-->
     <!--        </properties>-->
-    <!--    </rule>-->
-
+    <!--    </rule>
+-->
     <!-- One empty line between different class members like properties or methods. -->
     <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing">
         <severity>5</severity>
@@ -311,6 +330,8 @@
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
         <severity phpcs-only="true">5</severity>
         <severity phpcbf-only="true">0</severity> <!-- May require some manual code changes -->
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator.ClassNameReferencedViaMagicConstant" phpcbf-only="true"/>
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator.ClassNameReferencedViaFunctionCall" phpcbf-only="true"/>
     </rule>
 
     <!-- One empty line between methods. -->
@@ -448,11 +469,6 @@
         </properties>
     </rule>
 
-    <!-- Class/interface/trait names must match names of files they're contained in -->
-    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
-        <severity>20</severity> <!-- Can prevent actual errors -->
-    </rule>
-
     <!-- Standarizes formatting of the return type hint -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
         <severity>5</severity>
@@ -543,12 +559,6 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.UselessTernaryOperator">
         <severity>5</severity>
     </rule>
-
-    <!-- There are some public methods that actually do require param types in annotations. -->
-    <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation"/>
-
-    <!-- We always add comments to everything. Including return types. -->
-    <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation"/>
 
     <!-- List of Slevomat rules we haven't included: -->
     <!-- SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch - goes against https://wiki.php.net/rfc/non-capturing_catches which can be quite useful in Magento. -->

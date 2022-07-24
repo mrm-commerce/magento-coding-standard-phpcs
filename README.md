@@ -45,6 +45,12 @@ php vendor/bin/phpcs --runtime-set testVersion 7.4 --standard=vendor/mrm-commerc
 ```
 
 ## FAQ
+### PHPCS suggests changes that are not compatible with the PHP version I'm using on my project
+Ensure that you are running PHPCS using the same PHP version that's used in your project.
+For example, if a remote server hosting your Magento website runs PHP 7.3, you should not use 7.4 locally.
+Some sniffs will detect your PHP version and will react accordingly. Be aware that the PHP version that you defined
+in project settings will be ignored and the actual PHP version you run your project on will be used.
+
 ### PHPCBF automatically adds syntax that's not compatible with my PHP version
 Ensure that you are running PHPCBF/PHPCS using the same PHP version that's used in your project. Some sniffs will detect your PHP version and will react accordingly. 
 

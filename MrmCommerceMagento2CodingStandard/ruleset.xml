@@ -6,6 +6,17 @@
     <rule ref="../../../magento/magento-coding-standard/Magento2/ruleset.xml"/>
     <rule ref="../../../phpcompatibility/php-compatibility/PHPCompatibility/ruleset.xml"/>
     <rule ref="../../../squizlabs/php_codesniffer/src/Standards/PSR12/ruleset.xml"/>
+
+    <!-- Running some php-related rules on .xml files can have dire consequences -->
+    <exclude-pattern>*\.xml$</exclude-pattern>
+
+    <rule ref="Magento2">
+        <!-- Methods shouldn't need annotations - names should be self-descriptive. Also bad for existing projects -->
+        <exclude name="Magento2.Annotation.MethodAnnotationStructure.MethodAnnotation"/>
+        <!-- Methods don't have to have annotations so an empty line before tags is not required either -->
+        <exclude name="Magento2.Commenting.ClassPropertyPHPDocFormatting.Missing"/>
+    </rule>
+
     <rule ref="Security">
         <!-- Too many false positives in case of repositories - excluding until it's fixed -->
         <exclude name="Security.BadFunctions.FilesystemFunctions.WarnFilesystem"/>

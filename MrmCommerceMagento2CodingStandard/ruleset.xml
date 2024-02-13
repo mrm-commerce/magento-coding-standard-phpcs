@@ -91,8 +91,8 @@
         <severity phpcs-only="true">20</severity> <!-- Brings A LOT of added value - prevents errors and increases security. -->
         <severity phpcbf-only="true">0</severity> <!-- May cause existing code to fail, so not fixable automatically -->
         <properties>
-            <property name="newlinesCountBetweenOpenTagAndDeclare" value="2"/>
-            <property name="newlinesCountAfterDeclare" value="2"/>
+            <property name="linesCountBeforeDeclare" value="1"/>
+            <property name="linesCountAfterDeclare" value="1"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
         </properties>
         <!-- May cause existing code to fail, so not fixable automatically -->
@@ -321,10 +321,7 @@
     <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing">
         <severity>5</severity>
         <properties>
-            <property name="minLinesCountBeforeWithComment" value="0"/>
-            <property name="maxLinesCountBeforeWithComment" value="0"/>
-            <property name="minLinesCountBeforeWithoutComment" value="0"/>
-            <property name="maxLinesCountBeforeWithoutComment" value="0"/>
+            <property name="linesCountBetweenMembers" value="0"/>
         </properties>
     </rule>
 

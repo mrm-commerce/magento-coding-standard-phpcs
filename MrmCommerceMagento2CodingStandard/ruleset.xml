@@ -342,15 +342,6 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator.ClassNameReferencedViaFunctionCall" phpcbf-only="true"/>
     </rule>
 
-    <!-- One empty line between methods. -->
-    <rule ref="SlevomatCodingStandard.Classes.MethodSpacing">
-        <severity>5</severity>
-        <properties>
-            <property name="minLinesCount" value="1"/>
-            <property name="maxLinesCount" value="1"/>
-        </properties>
-    </rule>
-
     <!-- Keeps the right number of spaces in property declarations and ensures that the order of modifiers (e.g. public, static, readonly) is always the same. -->
     <rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration">
         <severity>5</severity>

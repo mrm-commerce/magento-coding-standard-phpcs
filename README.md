@@ -24,12 +24,12 @@ committing or merging it.
 2. Run the following command: `composer require mrm-commerce/magento-coding-standard-phpcs --dev --with-dependencies`
 3. You should see the package and its dependencies being installed with the following information at the 
    end of the output:
-   ```PHP CodeSniffer Config installed_paths set to ../../magento/magento-coding-standard,../../mrm-commerce/magento-coding-standard-phpcs,../../mrm-commerce/phpcs-security-audit,../../phpcompatibility/php-compatibility,../../slevomat/coding-standard```
+   ```PHP CodeSniffer Config installed_paths set to ../../magento/magento-coding-standard,../../mrm-commerce/magento-coding-standard-phpcs,../../mrm-commerce/phpcs-security-audit,../../magento/php-compatibility-fork,../../slevomat/coding-standard```
 4. If you see the `Failed to set PHP CodeSniffer installed_paths Config` error instead of the output above or you do not
    see any output related to phpcs at all, you can run the following commands manually from your Magento root directory:
    ```
    cd vendor/squizlabs/php_codesniffer/
-   php ./bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard,../../mrm-commerce/magento-coding-standard-phpcs,../../mrm-commerce/phpcs-security-audit,../../phpcompatibility/php-compatibility,../../slevomat/coding-standard
+   php ./bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard,../../mrm-commerce/magento-coding-standard-phpcs,../../mrm-commerce/phpcs-security-audit,../../magento/php-compatibility-fork,../../slevomat/coding-standard
    ```
 
 ## Usage

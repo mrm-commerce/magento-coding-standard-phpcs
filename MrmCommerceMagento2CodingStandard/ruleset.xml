@@ -2,9 +2,9 @@
 <ruleset name="MRM Commerce Magento 2 Coding Standard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../../../squizlabs/php_codesniffer/phpcs.xsd">
     <description>MRM Commerce Magento 2 Coding Standard</description>
-    <config name="installed_paths" value="../../magento/magento-coding-standard,../../mrm-commerce/magento-coding-standard-phpcs,../../mrm-commerce/phpcs-security-audit,../../phpcompatibility/php-compatibility,../../slevomat/coding-standard"/>
+    <config name="installed_paths" value="../../magento/magento-coding-standard,../../mrm-commerce/magento-coding-standard-phpcs,../../mrm-commerce/phpcs-security-audit,../../magento/php-compatibility-fork,../../slevomat/coding-standard"/>
     <rule ref="../../../magento/magento-coding-standard/Magento2/ruleset.xml"/>
-    <rule ref="../../../phpcompatibility/php-compatibility/PHPCompatibility/ruleset.xml"/>
+    <rule ref="../../../magento/php-compatibility-fork/PHPCompatibility/ruleset.xml"/>
     <rule ref="../../../squizlabs/php_codesniffer/src/Standards/PSR12/ruleset.xml"/>
 
     <!-- Running some php-related rules on .xml files can have dire consequences -->
